@@ -209,7 +209,16 @@ func historyHandler(message *discordgo.Message) {
 							for _, iAttachment := range msg.Attachments {
 								if len(findDownloadedImageByUrl(iAttachment.URL)) == 0 {
 									i++
-									startDownload(iAttachment.URL, iAttachment.Filename, folder, msg.ChannelID, msg.Author.ID, fileTime)
+
+									// BEDUCK
+									korea, _ := time.LoadLocation("Asia/Seoul")
+									messageTimestamp := fileTime.In(korea).Format("2006-01-02_15-04-05")
+									filename := messageTimestamp
+									extension := strings.Split(iAttachment.Filename, ".")[1]
+									filename += "." + extension
+									//
+
+									startDownload(iAttachment.URL, filename, folder, msg.ChannelID, msg.Author.ID, fileTime)
 								}
 							}
 							foundUrls := xurls.Strict.FindAllString(msg.Content, -1)
@@ -218,6 +227,16 @@ func historyHandler(message *discordgo.Message) {
 								for link, filename := range links {
 									if len(findDownloadedImageByUrl(link)) == 0 {
 										i++
+
+										// // BEDUCK
+										// fmt.Println(filename)
+										// extension := strings.Split(filename, ".")[1]
+										// korea, _ := time.LoadLocation("Asia/Seoul")
+										// messageTimestamp := fileTime.In(korea).Format("2006-01-02_15-04-05")
+										// filename = messageTimestamp
+										// filename += "." + extension
+										// //
+
 										startDownload(link, filename, folder, msg.ChannelID, msg.Author.ID, fileTime)
 									}
 								}
@@ -258,6 +277,15 @@ func defaultHandler(message *discordgo.Message) {
 			delete(interactiveChannelLinkTemp, message.ChannelID)
 			links, _ := getDownloadLinks(link, message.ChannelID, true)
 			for linkR, filename := range links {
+
+				// // BEDUCK
+				// extension := strings.Split(filename, ".")[1]
+				// korea, _ := time.LoadLocation("Asia/Seoul")
+				// messageTimestamp := fileTime.In(korea).Format("2006-01-02_15-04-05")
+				// filename = messageTimestamp
+				// filename += "." + extension
+				// //
+
 				startDownload(linkR, filename, folderName, message.ChannelID, message.Author.ID, fileTime)
 			}
 			dg.ChannelMessageSend(message.ChannelID, fmt.Sprintf("Download of <%s> finished", link))
@@ -270,6 +298,15 @@ func defaultHandler(message *discordgo.Message) {
 			delete(interactiveChannelLinkTemp, message.ChannelID)
 			links, _ := getDownloadLinks(link, message.ChannelID, true)
 			for linkR, filename := range links {
+
+				// // BEDUCK
+				// extension := strings.Split(filename, ".")[1]
+				// korea, _ := time.LoadLocation("Asia/Seoul")
+				// messageTimestamp := fileTime.In(korea).Format("2006-01-02_15-04-05")
+				// filename = messageTimestamp
+				// filename += "." + extension
+				// //
+
 				startDownload(linkR, filename, message.Content, message.ChannelID, message.Author.ID, fileTime)
 			}
 			dg.ChannelMessageSend(message.ChannelID, fmt.Sprintf("Download of <%s> finished", link))

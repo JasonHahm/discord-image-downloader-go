@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/url"
+	"strings"
 	"time"
 
 	"github.com/bwmarrin/discordgo"
@@ -184,9 +185,14 @@ func getDownloadItemsOfMessage(message *discordgo.Message) []*DownloadItem {
 			false,
 		)
 		for link, filename := range downloadLinks {
-			if rawLink.Filename != "" {
-				filename = rawLink.Filename
-			}
+			// if rawLink.Filename != "" {
+			// 	filename = rawLink.Filename
+			// }
+			korea, _ := time.LoadLocation("Asia/Seoul")
+			var messageTimestamp = linkTime.In(korea).Format("2006-01-02_15-04-05")
+			filename = messageTimestamp
+			extension := strings.Split(rawLink.Filename, ".")[1]
+			filename += "." + extension
 
 			downloadItems = append(downloadItems, &DownloadItem{
 				Link:     link,
