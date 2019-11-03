@@ -6,6 +6,7 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
+	"math/rand"
 	"mime"
 	"net/http"
 	"net/url"
@@ -276,6 +277,16 @@ func handleDiscordMessage(m *discordgo.Message) {
 				m.Author.ID,
 				downloadItem.Time,
 			)
+		}
+
+		// Do something else on the message
+
+		if strings.Contains(strings.ToLower(m.Content), "코노미") || strings.Contains(strings.ToLower(m.Content), "konomi") {
+			r := rand.New(rand.NewSource(time.Now().UnixNano()))
+			if r.Intn(10) < 5 {
+				fmt.Println("Konomi Detected")
+				dg.MessageReactionAdd(m.ChannelID, m.ID, "<:KonomiHuh:633279531318509613")
+			}
 		}
 
 	} else if _, ok := InteractiveChannelWhitelist[m.ChannelID]; ok {
