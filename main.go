@@ -298,7 +298,7 @@ func handleDiscordMessage(m *discordgo.Message) {
 					"<:KonomiDrink:618095343782854656",
 					"<:Konomi:632882167910891530",
 				}
-				dg.MessageReactionAdd(m.ChannelID, m.ID, konomiEmojis[rand.Intn(len(konomiEmojis))])
+				dg.MessageReactionAdd(m.ChannelID, m.ID, konomiEmojis[r.Intn(len(konomiEmojis))])
 			}
 		}
 
