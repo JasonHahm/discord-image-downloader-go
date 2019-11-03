@@ -210,15 +210,15 @@ func historyHandler(message *discordgo.Message) {
 								if len(findDownloadedImageByUrl(iAttachment.URL)) == 0 {
 									i++
 
-									// BEDUCK
-									korea, _ := time.LoadLocation("Asia/Seoul")
-									messageTimestamp := fileTime.In(korea).Format("2006-01-02_15-04-05")
-									filename := messageTimestamp
-									extension := strings.Split(iAttachment.Filename, ".")[1]
-									filename += "." + extension
-									//
+									// // BEDUCK
+									// korea, _ := time.LoadLocation("Asia/Seoul")
+									// messageTimestamp := fileTime.In(korea).Format("2006-01-02_15-04-05")
+									// filename := messageTimestamp
+									// extension := strings.Split(iAttachment.URL, ".")[1]
+									// filename += "." + extension
+									// //
 
-									startDownload(iAttachment.URL, filename, folder, msg.ChannelID, msg.Author.ID, fileTime)
+									startDownload(iAttachment.URL, iAttachment.Filename, folder, msg.ChannelID, msg.Author.ID, fileTime)
 								}
 							}
 							foundUrls := xurls.Strict.FindAllString(msg.Content, -1)
