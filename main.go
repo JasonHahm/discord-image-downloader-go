@@ -269,6 +269,10 @@ func handleDiscordMessage(m *discordgo.Message) {
 			return
 		}
 
+		if m.Author.ID == "620961970203525121" {
+			return
+		}
+
 		// download from whitelisted channels
 		downloadItems := getDownloadItemsOfMessage(m)
 
