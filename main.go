@@ -1008,14 +1008,6 @@ func downloadFromUrl(dUrl string, filename string, path string, channelId string
 		}
 	}
 
-	// BEDUCK
-	extension := strings.Split(filename, ".")[1]
-	korea, _ := time.LoadLocation("Asia/Seoul")
-	messageTimestamp := fileTime.In(korea).Format("2006-01-02_15-04-05")
-	filename = messageTimestamp
-	filename += "." + extension
-	//
-
 	bodyOfResp, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		fmt.Println("Could not read response", dUrl, "-", err)
@@ -1023,6 +1015,16 @@ func downloadFromUrl(dUrl string, filename string, path string, channelId string
 	}
 
 	contentType := http.DetectContentType(bodyOfResp)
+
+	// BEDUCK
+	korea, _ := time.LoadLocation("Asia/Seoul")
+	messageTimestamp := fileTime.In(korea).Format("2006-01-02_15-04-05")
+	filename = messageTimestamp
+	possibleExtension, _ := mime.ExtensionsByType(contentType)
+	if len(possibleExtension) > 0 {
+		filename += possibleExtension[0]
+	}
+	//
 
 	// check for valid filename, if not, replace with generic filename
 	if !RegexpFilename.MatchString(filename) {
