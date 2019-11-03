@@ -291,14 +291,17 @@ func handleDiscordMessage(m *discordgo.Message) {
 
 		if strings.Contains(strings.ToLower(m.Content), "코노미") || strings.Contains(strings.ToLower(m.Content), "konomi") {
 			r := rand.New(rand.NewSource(time.Now().UnixNano()))
-			if r.Intn(10) < 5 {
-				fmt.Println("Konomi Detected")
+			if r.Intn(10) < 7 {
+				//fmt.Println("Konomi Detected")
 				konomiEmojis := []string{
 					"<:KonomiHuh:633279531318509613",
 					"<:KonomiDrink:618095343782854656",
 					"<:Konomi:632882167910891530",
 				}
-				dg.MessageReactionAdd(m.ChannelID, m.ID, konomiEmojis[r.Intn(len(konomiEmojis))])
+				addReaction := dg.MessageReactionAdd(m.ChannelID, m.ID, konomiEmojis[r.Intn(len(konomiEmojis))])
+				if addReaction != nil {
+					fmt.Println(addReaction)
+				}
 			}
 		}
 
