@@ -265,6 +265,10 @@ func skipDuplicateLinks(linkList map[string]string, channelID string, interactiv
 
 func handleDiscordMessage(m *discordgo.Message) {
 	if folderName, ok := ChannelWhitelist[m.ChannelID]; ok {
+		if m.Author.Bot {
+			return
+		}
+
 		// download from whitelisted channels
 		downloadItems := getDownloadItemsOfMessage(m)
 
