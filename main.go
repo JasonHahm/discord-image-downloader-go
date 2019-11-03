@@ -967,6 +967,10 @@ func startDownload(dUrl string, filename string, path string, channelId string, 
 }
 
 func downloadFromUrl(dUrl string, filename string, path string, channelId string, userId string, fileTime time.Time) bool {
+	if strings.Contains(dUrl, "vod-download.twitch.tv") {
+		fmt.Println("Skpping vod-download.twitch.tv")
+		return false
+	}
 	err := os.MkdirAll(path, 755)
 	if err != nil {
 		fmt.Println("Error while creating folder", path, "-", err)
