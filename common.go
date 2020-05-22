@@ -43,6 +43,7 @@ func updateDiscordStatus() {
 		},
 		Status: "online",
 	})
+	//dg.UpdateStatus(1, "")
 }
 
 func Pagify(text string, delimiter string) []string {
